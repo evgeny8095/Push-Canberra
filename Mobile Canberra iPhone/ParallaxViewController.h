@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ACParallaxView.h"
 #import "RESideMenu.h"
+#import "RESideMenuItem.h"
 
 @interface ParallaxViewController : UIViewController <ACParallaxViewDelegate>
 
