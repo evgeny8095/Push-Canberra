@@ -1,4 +1,11 @@
-test
+# Mobile Canberra (fully working)
+
+This repo is a fork of [Mobile Canberra](https://github.com/actgov/Mobile-Canberra) provided by the ACT Government. The original repo for the iPhone version does not have all the required third-party libraries and thus does not compile out-of-the-box. This repo provides a fully working version of the app. It was created for [GovHack 2014](http://www.govhack.org) to enable participation in the [*Best Fork of Mobile Canberra*](http://www.govhack.org/2014-prizes/#canberra-local-competition) category.
+
+I take no credit for writing the original app - just for doing a bit of hacking to get a fully working version available.
+
+<hr />
+
 # Mobile Canberra
 <hr />
 
