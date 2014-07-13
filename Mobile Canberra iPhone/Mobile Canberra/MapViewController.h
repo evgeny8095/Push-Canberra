@@ -14,9 +14,10 @@
 #import "KPTreeController.h"
 #import "iCarousel.h"
 #import "ListViewController.h"
+#import "ESTBeaconManager.h"
 
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UITextFieldDelegate, KPTreeControllerDelegate, iCarouselDataSource, iCarouselDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UITextFieldDelegate, KPTreeControllerDelegate, iCarouselDataSource, iCarouselDelegate, ESTBeaconManagerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView *mapHolder;
 @property (nonatomic, strong) IBOutlet UIView *sliderHolder;
@@ -37,10 +38,14 @@
 @property (strong, nonatomic) NSMutableArray *datasets;
 @property BOOL aroundmeclicked;
 @property (strong, nonatomic) IBOutlet iCarousel *mapGallery;
-
+@property (strong, nonatomic) NSArray *busInfoArray;
+@property (strong, nonatomic) NSArray *tripInfoArray;
+@property (strong, nonatomic) NSArray *routeInfoArray;
+@property (nonatomic) BOOL blockAlerts;
 
 @property (weak, nonatomic) IBOutlet UIButton *mapLegendButton;
 
+@property (nonatomic, strong) ESTBeaconManager *beaconManager;
 
 
 - (IBAction)showMenu:(id)sender;

@@ -17,4 +17,6 @@
 
 @property (strong, nonatomic) ParallaxViewController *viewController;
 
+@property (nonatomic) int flag;
+
 @end

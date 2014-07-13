@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "ParallaxViewController.h"
+#import "DataSetListElement.h"
+#import "MapViewController.h"
 
 #define PKWaitDelay(dly, block)     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,dly*100000),dispatch_get_current_queue(), ^{ block })
 
@@ -22,6 +24,11 @@
     self.window.rootViewController = self.viewController;
    
     [self.window makeKeyAndVisible];
+    
+	if ( [self returnAppRunCount] == 0 ) {
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];        
+	}
+    
     return YES;
 }
 
@@ -39,17 +46,113 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [self incrementAppRunCount];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    
+    // Check the notification
+    if ([[notification.userInfo objectForKey:@"identifier"] isEqualToString:@"relic"]) {
+        
+        NSString *jsonFilePath = [[NSBundle mainBundle] pathForResource:@"GetListOfDatasets" ofType:@"json"];
+        NSData *jsonData = [NSData dataWithContentsOfFile:jsonFilePath];
+        NSError *error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
+        NSMutableArray *datasets = [[NSMutableArray alloc] init];
+        NSMutableArray *originaldatasets = [[NSMutableArray alloc] init];
+        
+        NSNumber *success = [jsonDict objectForKey:@"success"];
+        if ([success integerValue]==1){
+            NSArray *listOfDatasets = [jsonDict objectForKey:@"listOfDatasets"];
+            for (int i=0;i<listOfDatasets.count;i++){
+                NSDictionary *dataobject = [listOfDatasets objectAtIndex:i];
+                DataSetListElement *dataset = [[DataSetListElement alloc] init];
+                [dataset initWithName:[dataobject objectForKey:@"name"] andColor:[dataobject objectForKey:@"color"] andId:[dataobject objectForKey:@"id"]];
+                [datasets addObject:dataset];
+                [originaldatasets addObject:dataset];
+            }
+            
+            MapViewController *mapViewController = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
+            DataSetListElement *dataset = [datasets objectAtIndex:6];
+            mapViewController.clickedDataset = dataset;
+            mapViewController.datasets = datasets;
+            mapViewController.blockAlerts = YES;
+           
+            // Quite possibly the most dodgy bit of coding ever done in a hackathon...
+            // For demo only, don't expect this to work very well once it's been presented :)
+            self.window.rootViewController = mapViewController;
+            
+            mapViewController.popupHolder.hidden = NO;
+            [mapViewController.view bringSubviewToFront:mapViewController.popupHolder];
+            mapViewController.popupTitle.text = @"Relic";
+            mapViewController.pointDetails.text = @"Relic is a bronze sentinal, an ancient figure borne from distant memory, standing at a nexus of both time and place. Located at the edge of the city and watching over a seat of learning, the sculpture evokes both power and purpose. Relic was the winner of the prestigious McClelland Sculpture Prize in 2007.";
+            [mapViewController.popupBk setImage: [UIImage imageNamed:@"bluelargepinbk"]];
+            [mapViewController.popupClose setImage:[UIImage imageNamed:@"closemarkerbluebtn"] forState:UIControlStateNormal];
+            [mapViewController.popupDirections setImage:[UIImage imageNamed:@"bluetakemetherebtn"] forState:UIControlStateNormal];
+            
+        }
+    
+    }
+    
+}
+
+
+#pragma mark -
+#pragma mark app run count
+
+
+// -------------------------------------
+// * Returns the run count for the app *
+// -------------------------------------
+
+- (int)returnAppRunCount {
+    
+	// Get the defaults for the app
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	// Convert the run count (stored as a NSString into an integer)
+	int runCount = [[defaults objectForKey:@"appRunCount"] intValue];
+    
+	// Return the run count
+	return runCount;
+	
+}
+
+
+// ---------------------------------------
+// * Increment the run count for the app *
+// ---------------------------------------
+
+- (void)incrementAppRunCount {
+    
+	// Get the defaults for the app
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	// Convert the run count (stored as a NSString into an integer)
+	int runCount = [[defaults objectForKey:@"appRunCount"] intValue];
+    
+	// Increment and update the run count
+	[defaults setObject:[NSString stringWithFormat:@"%i", (runCount + 1)] forKey:@"appRunCount"];
+	
+	// Save the defaults
+	[defaults synchronize];
+	
 }
 
 @end

@@ -59,7 +59,7 @@ UIGestureRecognizer *tapper;
     tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = FALSE;
     [self.view addGestureRecognizer:tapper];
-   
+    
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *) sender
@@ -431,8 +431,6 @@ UIGestureRecognizer *tapper;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#
 
 #pragma mark - TableView source & delegate
 

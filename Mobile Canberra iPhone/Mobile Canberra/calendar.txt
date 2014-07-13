@@ -1,0 +1,5 @@
+service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+2013-COMBMAST-Weekday-17,1,1,1,1,1,0,0,20140527,20140829
+2013-COMBMAST-Saturday-17,0,0,0,0,0,1,0,20140531,20140823
+2013-COMBMAST-Sunday-16,0,0,0,0,0,0,1,20140601,20140824
+2013-COMBSVac-Weekday-08,1,1,1,1,1,0,0,20140707,20140718

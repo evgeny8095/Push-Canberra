@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342931B71970FACF00C2C014 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342931B61970FACF00C2C014 /* CoreBluetooth.framework */; };
+		342931BD197102DD00C2C014 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 342931BC197102DD00C2C014 /* libEstimoteSDK.a */; };
+		342931C71971326300C2C014 /* agency.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931BF1971326300C2C014 /* agency.txt */; };
+		342931C81971326300C2C014 /* calendar_dates.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C01971326300C2C014 /* calendar_dates.txt */; };
+		342931C91971326300C2C014 /* calendar.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C11971326300C2C014 /* calendar.txt */; };
+		342931CA1971326300C2C014 /* routes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C21971326300C2C014 /* routes.txt */; };
+		342931CB1971326300C2C014 /* shapes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C31971326300C2C014 /* shapes.txt */; };
+		342931CC1971326300C2C014 /* stop_times.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C41971326300C2C014 /* stop_times.txt */; };
+		342931CD1971326300C2C014 /* stops.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C51971326300C2C014 /* stops.txt */; };
+		342931CE1971326300C2C014 /* trips.txt in Resources */ = {isa = PBXBuildFile; fileRef = 342931C61971326300C2C014 /* trips.txt */; };
+		342931D31971407500C2C014 /* BBQCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 342931D21971407500C2C014 /* BBQCSVParser.m */; };
 		34C6E6F81970B73100EB78E0 /* MapAnnotationExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6E6F71970B73100EB78E0 /* MapAnnotationExample.m */; };
 		34C6E6FC1970B8D300EB78E0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6E6FB1970B8D300EB78E0 /* Reachability.m */; };
 		34C6E6FE1970C08D00EB78E0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C6E6FD1970C08D00EB78E0 /* libxml2.dylib */; };
@@ -19,6 +30,8 @@
 		34C6E7181970CAF100EB78E0 /* UINavigationController+DelegateFixes.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6E70D1970CAF100EB78E0 /* UINavigationController+DelegateFixes.m */; };
 		34C6E7191970CAF100EB78E0 /* UIView+ImageSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6E70F1970CAF100EB78E0 /* UIView+ImageSnapshot.m */; };
 		34C6E71A1970CAF100EB78E0 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6E7111970CAF100EB78E0 /* UIViewController+RESideMenu.m */; };
+		34CBAA2C1971F0A500843FE2 /* stop_times_4531.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34CBAA2B1971F0A500843FE2 /* stop_times_4531.txt */; };
+		34DFDC7E197209E800B38575 /* GetListOfDatasets.json in Resources */ = {isa = PBXBuildFile; fileRef = 34DFDC7D197209E800B38575 /* GetListOfDatasets.json */; };
 		34E28CE719701C8400DDD6BB /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E28CDF19701C8400DDD6BB /* KPAnnotation.m */; };
 		34E28CE819701C8400DDD6BB /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E28CE119701C8400DDD6BB /* KPAnnotationTree.m */; };
 		34E28CE919701C8400DDD6BB /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E28CE419701C8400DDD6BB /* KPTreeController.m */; };
@@ -197,6 +210,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		342931B61970FACF00C2C014 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		342931BC197102DD00C2C014 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEstimoteSDK.a; path = EstimoteSDK/libEstimoteSDK.a; sourceTree = "<group>"; };
+		342931BF1971326300C2C014 /* agency.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = agency.txt; sourceTree = "<group>"; };
+		342931C01971326300C2C014 /* calendar_dates.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = calendar_dates.txt; sourceTree = "<group>"; };
+		342931C11971326300C2C014 /* calendar.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = calendar.txt; sourceTree = "<group>"; };
+		342931C21971326300C2C014 /* routes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = routes.txt; sourceTree = "<group>"; };
+		342931C31971326300C2C014 /* shapes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shapes.txt; sourceTree = "<group>"; };
+		342931C41971326300C2C014 /* stop_times.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stop_times.txt; sourceTree = "<group>"; };
+		342931C51971326300C2C014 /* stops.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stops.txt; sourceTree = "<group>"; };
+		342931C61971326300C2C014 /* trips.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = trips.txt; sourceTree = "<group>"; };
+		342931D11971407500C2C014 /* BBQCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBQCSVParser.h; sourceTree = "<group>"; };
+		342931D21971407500C2C014 /* BBQCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBQCSVParser.m; sourceTree = "<group>"; };
 		34C6E6F61970B73100EB78E0 /* MapAnnotationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotationExample.h; sourceTree = "<group>"; };
 		34C6E6F71970B73100EB78E0 /* MapAnnotationExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotationExample.m; sourceTree = "<group>"; };
 		34C6E6FA1970B8D300EB78E0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -220,6 +245,8 @@
 		34C6E70F1970CAF100EB78E0 /* UIView+ImageSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ImageSnapshot.m"; sourceTree = "<group>"; };
 		34C6E7101970CAF100EB78E0 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
 		34C6E7111970CAF100EB78E0 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
+		34CBAA2B1971F0A500843FE2 /* stop_times_4531.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stop_times_4531.txt; sourceTree = "<group>"; };
+		34DFDC7D197209E800B38575 /* GetListOfDatasets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GetListOfDatasets.json; sourceTree = "<group>"; };
 		34E28CDE19701C8400DDD6BB /* KPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPAnnotation.h; sourceTree = "<group>"; };
 		34E28CDF19701C8400DDD6BB /* KPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotation.m; sourceTree = "<group>"; };
 		34E28CE019701C8400DDD6BB /* KPAnnotationTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree.h; sourceTree = "<group>"; };
@@ -459,6 +486,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				342931BD197102DD00C2C014 /* libEstimoteSDK.a in Frameworks */,
+				342931B71970FACF00C2C014 /* CoreBluetooth.framework in Frameworks */,
 				34C6E6FE1970C08D00EB78E0 /* libxml2.dylib in Frameworks */,
 				35DF9F2217F2AF4F00B1F2BA /* MapKit.framework in Frameworks */,
 				35B7DD8217E6E00D00711BCE /* libz.dylib in Frameworks */,
@@ -487,6 +516,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		342931BE1971325300C2C014 /* Google Transit Data */ = {
+			isa = PBXGroup;
+			children = (
+				34CBAA2B1971F0A500843FE2 /* stop_times_4531.txt */,
+				342931BF1971326300C2C014 /* agency.txt */,
+				342931C01971326300C2C014 /* calendar_dates.txt */,
+				342931C11971326300C2C014 /* calendar.txt */,
+				342931C21971326300C2C014 /* routes.txt */,
+				342931C31971326300C2C014 /* shapes.txt */,
+				342931C41971326300C2C014 /* stop_times.txt */,
+				342931C51971326300C2C014 /* stops.txt */,
+				342931C61971326300C2C014 /* trips.txt */,
+			);
+			name = "Google Transit Data";
+			sourceTree = "<group>";
+		};
 		34C6E6F91970B8CA00EB78E0 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -710,6 +755,8 @@
 		3503727817E6AAD1002717C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				342931BC197102DD00C2C014 /* libEstimoteSDK.a */,
+				342931B61970FACF00C2C014 /* CoreBluetooth.framework */,
 				34C6E6FD1970C08D00EB78E0 /* libxml2.dylib */,
 				34E28D9D19701E8300DDD6BB /* GHUnitIOS.framework */,
 				35DF9F2117F2AF4F00B1F2BA /* MapKit.framework */,
@@ -756,6 +803,9 @@
 				35B7DD8717E6E0C700711BCE /* MapViewController.h */,
 				35B7DD8817E6E0C700711BCE /* MapViewController.m */,
 				35B6EFC317E6EC94000217A4 /* MapViewController.xib */,
+				342931D11971407500C2C014 /* BBQCSVParser.h */,
+				342931D21971407500C2C014 /* BBQCSVParser.m */,
+				342931BE1971325300C2C014 /* Google Transit Data */,
 				3503728017E6AAD1002717C8 /* Supporting Files */,
 			);
 			path = "Mobile Canberra";
@@ -764,6 +814,7 @@
 		3503728017E6AAD1002717C8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				34DFDC7D197209E800B38575 /* GetListOfDatasets.json */,
 				3516228417E6D32C00801835 /* Ubuntu.ttf */,
 				3516228517E6D32C00801835 /* Ubuntu-MediumItalic.ttf */,
 				3516228617E6D32C00801835 /* Ubuntu-Medium.ttf */,
@@ -1007,6 +1058,7 @@
 				35DD328D17F3F4E000256949 /* redlargepinbk.png in Resources */,
 				3516227717E6C66C00801835 /* headeraroundme.png in Resources */,
 				3547C6991810FFE00072C2CA /* limepin.png in Resources */,
+				342931CC1971326300C2C014 /* stop_times.txt in Resources */,
 				3547C6981810FFE00072C2CA /* orangepin.png in Resources */,
 				3516227817E6C66C00801835 /* headerlogo.png in Resources */,
 				3516227A17E6CB2C00801835 /* mainsearch.png in Resources */,
@@ -1018,6 +1070,7 @@
 				35DF9F3617F2BF3500B1F2BA /* cluster.png in Resources */,
 				35661879184C1A5A002B2C1F /* closemarkerakaroabtn.png in Resources */,
 				3516228017E6D14400801835 /* MainTableCell.xib in Resources */,
+				342931C81971326300C2C014 /* calendar_dates.txt in Resources */,
 				3516228317E6D1F600801835 /* listarrow.png in Resources */,
 				35DF9F2017F293E400B1F2BA /* redpin.png in Resources */,
 				3516228C17E6D32C00801835 /* Ubuntu.ttf in Resources */,
@@ -1028,7 +1081,11 @@
 				35DD328917F3F4E000256949 /* bluetakemetherebtn.png in Resources */,
 				35661884184C2627002B2C1F /* amberpin.png in Resources */,
 				35764762182342A0000D497B /* closemarkeralbescentbtn.png in Resources */,
+				34DFDC7E197209E800B38575 /* GetListOfDatasets.json in Resources */,
+				342931C91971326300C2C014 /* calendar.txt in Resources */,
+				342931CA1971326300C2C014 /* routes.txt in Resources */,
 				3576476E1823434A000D497B /* 58icon.png in Resources */,
+				342931CD1971326300C2C014 /* stops.txt in Resources */,
 				35661887184C2627002B2C1F /* amuletpin.png in Resources */,
 				35661885184C2627002B2C1F /* ambertakemetherebtn.png in Resources */,
 				3547C69C1810FFE00072C2CA /* closemarkerorangebtn.png in Resources */,
@@ -1036,6 +1093,7 @@
 				3547C6A4181115800072C2CA /* closemarkerpridebtn.png in Resources */,
 				35DD328E17F3F4E000256949 /* bluelargepinbk.png in Resources */,
 				35661883184C2627002B2C1F /* amberlargepinbk.png in Resources */,
+				342931CE1971326300C2C014 /* trips.txt in Resources */,
 				3566188A184C2627002B2C1F /* closemarkeramberbtn.png in Resources */,
 				3516228E17E6D32C00801835 /* Ubuntu-Medium.ttf in Resources */,
 				3516228F17E6D32C00801835 /* Ubuntu-LightItalic.ttf in Resources */,
@@ -1048,6 +1106,7 @@
 				3FB72D181803BA190037C638 /* bottom_button.png in Resources */,
 				35A5FDF6181E328C00A34655 /* galleryopened.png in Resources */,
 				3516229317E6D32C00801835 /* Ubuntu-Bold.ttf in Resources */,
+				342931CB1971326300C2C014 /* shapes.txt in Resources */,
 				3547C68D1810FFE00072C2CA /* closemarkerpurplebtn.png in Resources */,
 				35A5FDF7181E328C00A34655 /* pindetails.png in Resources */,
 				3547C6901810FFE00072C2CA /* purplepin.png in Resources */,
@@ -1068,10 +1127,12 @@
 				35764761182342A0000D497B /* aquamarinetakemetherebtn.png in Resources */,
 				3547C6921810FFE00072C2CA /* cyantakemetherebtn.png in Resources */,
 				35661876184C1A5A002B2C1F /* akaroalargepinbk.png in Resources */,
+				34CBAA2C1971F0A500843FE2 /* stop_times_4531.txt in Resources */,
 				3547C69A1810FFE00072C2CA /* orangetakemetherebtn.png in Resources */,
 				3547C6931810FFE00072C2CA /* closemarkercyanbtn.png in Resources */,
 				3550730517E8035D007B1BC5 /* MobileCanberraSplash.png in Resources */,
 				35764760182342A0000D497B /* aquamarinepin.png in Resources */,
+				342931C71971326300C2C014 /* agency.txt in Resources */,
 				35764768182342A0000D497B /* pinktakemetherebtn.png in Resources */,
 				3550730B17E80BCF007B1BC5 /* iconlarger.png in Resources */,
 				3550730D17E80BD4007B1BC5 /* iconsmaller.png in Resources */,
@@ -1099,6 +1160,7 @@
 				34E28CF719701CB600DDD6BB /* MYBlurIntroductionView.m in Sources */,
 				34E28D0919701CD600DDD6BB /* VPPMapClusterView.m in Sources */,
 				3516225217E6B02800801835 /* ParallaxViewController.m in Sources */,
+				342931D31971407500C2C014 /* BBQCSVParser.m in Sources */,
 				34E28CE919701C8400DDD6BB /* KPTreeController.m in Sources */,
 				34C6E7161970CAF100EB78E0 /* RESideMenuCell.m in Sources */,
 				34C6E71A1970CAF100EB78E0 /* UIViewController+RESideMenu.m in Sources */,
@@ -1224,7 +1286,7 @@
 		3503729A17E6AAD1002717C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zakaria Bouguettaya (SPN5QJG76M)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zakaria Bouguettaya (SPN5QJG76M)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1237,15 +1299,25 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${SDK_DIR}/usr/include/libxml2",
+					"$(SRCROOT)/EstimoteSDK/Headers",
 				);
 				INFOPLIST_FILE = "Mobile Canberra/Mobile Canberra-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Mobile",
+					Canberra,
+					"$(PROJECT_DIR)/Mobile",
+					Canberra/EstimoteSDK,
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CF24D634-113D-4780-991A-D2754AB32DA9";
+				PROVISIONING_PROFILE = "C453180E-61DF-4719-8038-111B1379DA91";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1254,7 +1326,7 @@
 		3503729B17E6AAD1002717C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zakaria Bouguettaya (SPN5QJG76M)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zakaria Bouguettaya (SPN5QJG76M)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1267,15 +1339,25 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${SDK_DIR}/usr/include/libxml2",
+					"$(SRCROOT)/EstimoteSDK/Headers",
 				);
 				INFOPLIST_FILE = "Mobile Canberra/Mobile Canberra-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Mobile",
+					Canberra,
+					"$(PROJECT_DIR)/Mobile",
+					Canberra/EstimoteSDK,
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CF24D634-113D-4780-991A-D2754AB32DA9";
+				PROVISIONING_PROFILE = "C453180E-61DF-4719-8038-111B1379DA91";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

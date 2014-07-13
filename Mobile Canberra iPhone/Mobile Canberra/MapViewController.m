@@ -15,7 +15,8 @@
 #import "VPPMapClusterView.h"
 #import "VPPMapCluster.h"
 #import "KPAnnotation.h"
-
+#import "ESTBeaconRegion.h"
+#import "BBQCSVParser.h"
 
 @interface MapViewController ()
 
@@ -57,6 +58,36 @@ MKRoute *route;
     self.mapGallery.dataSource = self;
     self.mapGallery.delegate = self;
     counter=0;
+    
+    /////////////////////////////////////////////////////////////
+    // setup Estimote beacon manager
+    
+    // create manager instance
+    self.beaconManager = [[ESTBeaconManager alloc] init];
+    self.beaconManager.delegate = self;
+    self.beaconManager.avoidUnknownStateBeacons = YES;
+    
+    // All this would be stored in Core Data for efficiency - this is just a quick way of doing it for proof of concept purposes
+    
+    // Load the bus stop information into an array
+    BBQCSVParser *csvParser = [[BBQCSVParser alloc] init];
+    NSString *busInfoFilePath = [[NSBundle mainBundle] pathForResource:@"stop_times_4531" ofType:@"txt"];
+    NSData *busInfoData = [NSData dataWithContentsOfFile:busInfoFilePath];
+    self.busInfoArray = [csvParser arrayFromCSVData:busInfoData headerRow:YES];
+    
+    
+    // Load all the trip info into the array
+    NSString *tripInfoFilePath = [[NSBundle mainBundle] pathForResource:@"trips" ofType:@"txt"];
+    NSData *tripInfoData = [NSData dataWithContentsOfFile:tripInfoFilePath];
+    self.tripInfoArray = [csvParser arrayFromCSVData:tripInfoData headerRow:YES];
+    
+    
+    // Load all the route info into the array
+    NSString *routeInfoFilePath = [[NSBundle mainBundle] pathForResource:@"routes" ofType:@"txt"];
+    NSData *routeInfoData = [NSData dataWithContentsOfFile:routeInfoFilePath];
+    self.routeInfoArray = [csvParser arrayFromCSVData:routeInfoData headerRow:YES];
+    NSLog(@"routeInfoArray %@", self.routeInfoArray);
+    
 }
 
 - (IBAction)goHome:(id)sender{
@@ -166,11 +197,42 @@ MKRoute *route;
         [self getAllDatasets];
     }
     else{
-        [SVProgressHUD showWithStatus:@"Loading Points.." maskType:SVProgressHUDMaskTypeClear];
+        if (!self.blockAlerts)
+            [SVProgressHUD showWithStatus:@"Loading Points.." maskType:SVProgressHUDMaskTypeClear];
         [self performSelectorInBackground:@selector(getListOfPoints) withObject:nil];
    
     }
     
+    NSLog(@"self.clickedDataset.name %@", self.clickedDataset.name);
+    
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (!self.blockAlerts) {
+        
+        // Check the type of dataset to ask whether we should provide notifications - yes, I know it's bad to do
+        // a condition based on a string but it's a hackathon :)
+        if ([self.clickedDataset.name isEqualToString:@"Bus Stops"]) {
+            
+            // Check if the user has already provided a preference
+            //if ([defaults objectForKey:@"bus-stops"] == nil) {
+            
+            UIAlertView *busStopNotificationsAlertView = [[UIAlertView alloc] initWithTitle:@"Bus Notifications" message:@"Would you like to recieve notifications and updates about ACTION bus schedules relevant to your location?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            busStopNotificationsAlertView.tag = 1000;
+            [busStopNotificationsAlertView show];
+            
+            //}
+            
+        }
+        
+        if ([self.clickedDataset.name isEqualToString:@"Public Art"]) {
+            
+            UIAlertView *artNotificationsAlertView = [[UIAlertView alloc] initWithTitle:@"Public Art" message:@"Would you like to recieve information about public art installations relevant to your location?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            artNotificationsAlertView.tag = 2000;
+            [artNotificationsAlertView show];
+            
+        }
+        
+    }
     
 }
 
@@ -889,6 +951,245 @@ KPAnnotation * annot;
     
 }
 
+
+#pragma mark -
+#pragma mark custom iBeacon methods
+
+- (void)registerBeaconNotificationsForDataset:(DataSetListElement *)dataSetElement {
+    
+    // create sample region with the UUID defined
+    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    
+    // Bus data set
+    if ([self.clickedDataset.name isEqualToString:@"Bus Stops"]) {
+        
+        ESTBeaconRegion *greenEstimoteRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid major:55013 minor:47498 identifier:@"GreenEstimoteRegion-BusStop"];
+        [self.beaconManager startMonitoringForRegion:greenEstimoteRegion];
+        [self.beaconManager requestStateForRegion:greenEstimoteRegion];
+
+        ESTBeaconRegion *blueEstimoteRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid major:43729 minor:6788 identifier:@"BlueEstimoteRegion-Bus"];
+        [self.beaconManager startMonitoringForRegion:blueEstimoteRegion];
+        [self.beaconManager requestStateForRegion:blueEstimoteRegion];
+        
+        NSLog(@"bus registered");
+        
+    }
+    
+    // Public art
+    if ([self.clickedDataset.name isEqualToString:@"Public Art"]) {
+        
+        ESTBeaconRegion *purpleEstimoteRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid major:22987 minor:37235 identifier:@"PurpleEstimoteRegion-PublicArt"];
+        [self.beaconManager startMonitoringForRegion:purpleEstimoteRegion];
+        [self.beaconManager requestStateForRegion:purpleEstimoteRegion];
+        
+        NSLog(@"public art registered");
+
+    }
+    
+}
+
+
+- (void)deregisterBeaconNotificationsForDataset:(DataSetListElement *)dataSetElement {
+ 
+    // For the moment we will stop ranging ALL beacon regions - easiest for the purpose of debugging
+    [self.beaconManager stopRangingBeaconsInAllRegions];
+    
+}
+
+
+#pragma mark - ESTBeaconManagerDelegate
+
+- (void)beaconManager:(ESTBeaconManager *)manager didDetermineState:(CLRegionState)state forRegion:(ESTBeaconRegion *)region {
+    
+    if(state == CLRegionStateInside) {
+        NSLog(@"Inside region");
+    }
+    
+    else {
+        NSLog(@"Outside region");
+    }
+    
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager didEnterRegion:(ESTBeaconRegion *)region {
+    
+    // Excuse the massively inefficient code below :)
+    
+    if (([region.identifier isEqualToString:@"GreenEstimoteRegion-BusStop"]) || ([region.identifier isEqualToString:@"BlueEstimoteRegion-Bus"])) {
+        
+        // Get the next scheduled bus service for this stop
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"HH:mm:ss";
+        NSString *timeNow = [dateFormatter stringFromDate:[NSDate date]];
+        NSLog(@"timeNow %@", timeNow);
+        
+        NSString *closestTime;
+        
+        // Loop through the busInfoArray - only looking at weekdays for this demo
+        // (indexes 645 to 1105)
+        int i = 645;
+        while (i < [self.busInfoArray count]) {
+            
+            // Current time
+            NSString *timeForIndex = [[self.busInfoArray objectAtIndex:i] objectAtIndex:1];
+            
+            // Convert the strings into dates
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm:ss"];
+            NSDate *date1 = [formatter dateFromString:timeNow];
+            NSDate *date2 = [formatter dateFromString:timeForIndex];
+            
+            // Find the closest date
+            NSComparisonResult result = [date1 compare:date2];
+            
+            if (result == NSOrderedSame) {
+                closestTime = timeForIndex;
+            }
+            
+            else if(result == NSOrderedAscending) {
+                closestTime = timeForIndex;
+                break;
+            }
+            
+            i++;
+            
+        }
+        
+        // Get the trip id
+        NSString *tripId = [[self.busInfoArray objectAtIndex:i] objectAtIndex:0];
+        
+        NSString *routeId;
+        
+        // Locate the trip information
+        for (int i = 0; i < [self.tripInfoArray count]; i++) {
+            
+            NSArray *tripInfo = [self.tripInfoArray objectAtIndex:i];
+            NSString *tripIdFromInfo = [tripInfo objectAtIndex:2];
+            
+            if ([tripIdFromInfo isEqualToString:tripId]) {
+                
+                routeId = [tripInfo objectAtIndex:0];
+                
+            }
+            
+        }
+        
+        NSString *routeNumber;
+        
+        // Locate the route information
+        for (int i = 0; i < [self.routeInfoArray count]; i++) {
+            
+            NSArray *routeInfo = [self.routeInfoArray objectAtIndex:i];
+            NSString *routeIdFromInfo = [routeInfo objectAtIndex:0];
+            
+            if ([routeIdFromInfo isEqualToString:routeId]) {
+                
+                routeNumber = [routeInfo objectAtIndex:1];
+                
+            }
+            
+        }
+        
+        NSLog(@"closestTime %@", closestTime);
+        NSLog(@"routeNumber %@", routeNumber);
+        
+        // Check if this is a bus stop region
+        if ([region.identifier isEqualToString:@"GreenEstimoteRegion-BusStop"]) {
+            
+            
+            // present local notification
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.alertBody = [NSString stringWithFormat:@"The next bus to arrive here is Route %@ at %@. It is currently on schedule.", routeNumber, closestTime];
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            
+            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+            
+        }
+        
+        // Check if this is a bus itself region
+        if ([region.identifier isEqualToString:@"BlueEstimoteRegion-Bus"]) {
+            
+            // present local notification
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.alertBody = [NSString stringWithFormat:@"The bus arriving now is Route %@.", routeNumber];
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            
+            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+            
+        }
+        
+    }
+    
+    else if ([region.identifier isEqualToString:@"PurpleEstimoteRegion-PublicArt"]) {
+        
+        // present local notification
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.alertBody = [NSString stringWithFormat:@"You are at Relic. Swipe for more information."];
+        notification.userInfo = @{@"identifier" : @"relic"};
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        
+    }
+    
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager didExitRegion:(ESTBeaconRegion *)region {
+    
+    /*
+    // DEBUG present local notification
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertBody = [NSString stringWithFormat:@"Did exit region: %@", region.identifier];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    */
+    
+}
+
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    // Bus schedules
+    if (alertView.tag == 1000) {
+        
+        // Yes
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [defaults setObject:@YES forKey:@"bus-stops"];
+            [self registerBeaconNotificationsForDataset:self.clickedDataset];
+        }
+        
+        // No
+        else {
+            [defaults setObject:@NO forKey:@"bus-stops"];
+            [self deregisterBeaconNotificationsForDataset:self.clickedDataset];
+        }
+        
+    }
+    
+    // Public art
+    else if (alertView.tag == 2000) {
+       
+        // Yes
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [defaults setObject:@YES forKey:@"public-art"];
+            [self registerBeaconNotificationsForDataset:self.clickedDataset];
+        }
+        
+        // No
+        else {
+            [defaults setObject:@NO forKey:@"public-art"];
+            [self deregisterBeaconNotificationsForDataset:self.clickedDataset];
+        }
+        
+    }
+    
+}
 
 
 

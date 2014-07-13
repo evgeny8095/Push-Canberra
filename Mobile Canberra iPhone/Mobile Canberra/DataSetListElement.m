@@ -26,5 +26,11 @@
     self.datasetId = datasetId;
 }
 
+- (NSString *)description {
+    
+    return [NSString stringWithFormat:@"%@, %@, %@", self.name, self.color, self.datasetId];
+    
+}
+
 
 @end
